@@ -6,4 +6,12 @@ This codebase currently supports macOS and Linux builds.  It can be easily porte
 
 If you have any questions don't hesitate to contact the author of this source code:
 
-Raydelto Henandez (raydelto@yahoo.com)
+Raydelto Hernandez (raydelto@yahoo.com)
+
+## Usage
+
+When the application is launched, a simple MD2 model is going to render rotating on its Y axis.  You can press the SPACE key to stop or resume the rotation.
+
+
+[![screenshot](http://www.raydelto.org/img/MD2_Loader_glfw.png)](https://github.com/raydelto/md2loader-glfw/releases)
+
