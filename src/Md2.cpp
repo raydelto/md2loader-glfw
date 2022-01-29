@@ -21,14 +21,14 @@ Md2::Md2(char *md2FileName, char* textureFileName): m_texture(std::make_unique<T
 Md2::~Md2()
 {
 	// Clean up
-	for(int i = 0 ; i < m_vaoIndices.size(); i++)
+	for(size_t i = 0 ; i < m_vaoIndices.size(); i++)
 	{
 		glDeleteVertexArrays(1, &m_vaoIndices[i]);
 		glDeleteBuffers(1, &m_vboIndices[i]);
 	}
 }
 
-void Md2::Draw(int frame, float angle, float interpolation, glm::mat4 view, glm::mat4 projection)
+void Md2::Draw(int frame, float angle, float interpolation, glm::mat4 &view, glm::mat4 &projection)
 {
 		assert(m_modelLoaded && m_textureLoaded && m_bufferInitialized);
 		m_texture->bind(0);
@@ -160,7 +160,11 @@ void Md2::LoadModel(char *md2FileName)
 	md2model::vector *pntlst;
 	mesh *triIndex, *bufIndexPtr;
 
+#ifdef WIN32
+	fopen_s(&fp, md2FileName, "rb");
+#else
 	fp = fopen(md2FileName, "rb");
+#endif
 	fseek(fp, 0, SEEK_END);
 	length = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
