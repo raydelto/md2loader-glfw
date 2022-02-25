@@ -4,10 +4,10 @@ ifeq ($(UNAME_S),Linux)
 	INCLUDES=-I ./include
 endif
 ifeq ($(UNAME_S),Darwin)
-FRAMEWORKS=-framework OpenGL
+FRAMEWORKS=-framework Cocoa -framework OpenGL -framework IOKit
 
 LIBS= -L/System/Library/Frameworks \
-	  -lglfw
+	  -lglfw3
 INCLUDES=-I./include
 SRC=src/glad.c
 OBJ=bin/glad.o
