@@ -34,4 +34,17 @@ all:
 	g++ -c -g $(SRC) $(INCLUDES) $(WARNINGS) $(FLAGS)
 	ls bin>/dev/null||mkdir bin
 	mv *.o ./bin
-	g++ -g $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o bin/main $(WARNINGS) $(FLAGS)
+	g++ -g $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o bin/maingpp $(WARNINGS) $(FLAGS)
+
+release:
+	g++ -c $(SRC) $(INCLUDES) $(WARNINGS) $(FLAGS)
+	ls bin>/dev/null||mkdir bin
+	mv *.o ./bin
+	g++ $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o bin/main $(WARNINGS) $(FLAGS)
+
+clang:
+	clang++ -c $(SRC) $(INCLUDES) $(WARNINGS) $(FLAGS) -Ofast
+	ls bin>/dev/null||mkdir bin
+	mv *.o ./bin
+	clang++ $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o bin/main $(WARNINGS) $(FLAGS) -Ofast
+
