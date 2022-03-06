@@ -18,6 +18,7 @@ class OpenGLInit
         bool initOpenGL();
 
         static bool gPause;
+        static bool gDebug;
         const char* APP_TITLE = "md2 Loader by Raydelto Hernandez v0.1";
         static int gWindowWidth;
         static int gWindowHeight;

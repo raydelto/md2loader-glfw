@@ -1,8 +1,14 @@
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
+
 #include "OpenGLInit.h"
 #include <iostream>
 #include <sstream>
 
 bool OpenGLInit::gPause = false;
+bool OpenGLInit::gDebug = true;
 bool OpenGLInit::gWireframe = false;
 
 int OpenGLInit::gWindowWidth = 1024;
@@ -10,6 +16,10 @@ int OpenGLInit::gWindowHeight = 768;
 
 OpenGLInit::~OpenGLInit()
 {
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
 	glfwDestroyWindow(gWindow);
 	glfwTerminate();
 }
@@ -42,8 +52,18 @@ bool OpenGLInit::initOpenGL()
 		return false;
 	}
 
+
 	// Make the window's context the current one
 	glfwMakeContextCurrent(gWindow);
+
+
+	ImGui::CreateContext();
+
+	ImGui_ImplGlfw_InitForOpenGL(gWindow, true);
+	const char* glsl_version = "#version 330 core";
+	ImGui_ImplOpenGL3_Init(glsl_version);
+	ImGui::StyleColorsDark();
+
 
 	// Initialize GLEW
 
@@ -88,6 +108,10 @@ void OpenGLInit::glfw_onKey(GLFWwindow* window, int key, int scancode, int actio
 
 	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
 		gPause = !gPause;
+
+	if (key == GLFW_KEY_D && action == GLFW_PRESS)
+		gDebug = !gDebug;
+
 	
 	if (key == GLFW_KEY_F1 && action == GLFW_PRESS)
 	{
