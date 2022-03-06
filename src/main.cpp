@@ -83,6 +83,7 @@ int main()
 		{
 			ImGui::Begin("MD2 Loader Debug Controls");
 			ImGui::Checkbox("Debug window", &OpenGLInit::gDebug);
+			ImGui::Checkbox("Pause rotation", &OpenGLInit::gPause);
 			ImGui::SliderFloat("Angle", &angle, 0.0f, 360.0f);
 			ImGui::ColorEdit3("Back color", (float *)&clear_color);
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
