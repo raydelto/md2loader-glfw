@@ -18,6 +18,6 @@ void main()
 	float InterpolatedDeltaY = (nextPos.y - pos.y) * interpolation;
 	float InterpolatedDeltaZ = (nextPos.z - pos.z) * interpolation;
 	vec3 interpolatedPos = vec3(pos.x + InterpolatedDeltaX, pos.y + InterpolatedDeltaY, pos.z + InterpolatedDeltaZ);
-	gl_Position = projection * modelView * vec4(interpolatedPos, 1.0f);
+	gl_Position = projection * view * model * vec4(interpolatedPos, 1.0f);
 	TexCoord = texCoord;
 }

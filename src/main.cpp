@@ -1,4 +1,4 @@
-//imgui includes
+// imgui includes
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -34,23 +34,25 @@ int main()
 	int bufferIndex = 0;
 
 	glm::mat4 view, projection;
-	glm::vec3 camPos(0.0f, 0.0f, 0.0f);
-	glm::vec3 targetPos(0.0f, 0.0f, -20.0f);
-	glm::vec3 up(1.0f, 0.0f, 0.0f);
-
-	// Create the View matrix
-	view = glm::lookAt(camPos, camPos + targetPos, up);
 
 	// Create the projection matrix
 	projection = glm::perspective(glm::radians(45.0f), (float)OpenGLInit::gWindowWidth / (float)OpenGLInit::gWindowHeight, 0.1f, 100.0f);
 	const float velocity = 5.0f;
 
-	bool show_demo_window = true;
-	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+	float camX = 0.0f;
+	float camY = 0.0f;
+	float camZ = -0.01f;
 
 	while (!glfwWindowShouldClose(openGLinit.GetWindow()))
 	{
+
+		glm::vec3 camPos(camY, camX, camZ);
+		glm::vec3 targetPos(0.0f, 0.0f, -20.0f);
+		glm::vec3 up(1.0f, 0.0f, 0.0f);
+
+		// Create the View matrix
+		view = glm::lookAt(camPos, camPos + targetPos, up);
 		openGLinit.showFPS();
 		float currentTime = glfwGetTime();
 		float deltaTime = currentTime - lastTime;
@@ -85,6 +87,9 @@ int main()
 			ImGui::Checkbox("Debug window", &OpenGLInit::gDebug);
 			ImGui::Checkbox("Pause rotation", &OpenGLInit::gPause);
 			ImGui::SliderFloat("Angle", &angle, 0.0f, 360.0f);
+			ImGui::SliderFloat("Cam X", &camX, -100.0f, 100.0f);
+			ImGui::SliderFloat("Cam Y", &camY, -100.0f, 100.0f);
+			ImGui::SliderFloat("Cam Z", &camZ, -20.0f, 70.0f);
 			ImGui::ColorEdit3("Back color", (float *)&clear_color);
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 			ImGui::End();
