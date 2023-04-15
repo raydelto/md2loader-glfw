@@ -4,13 +4,18 @@ ifeq ($(UNAME_S),Linux)
 	INCLUDES=-I ./include
 endif
 ifeq ($(UNAME_S),Darwin)
-FRAMEWORKS=-framework OpenGL
-
-LIBS= -L/System/Library/Frameworks \
-	  -lglfw
-INCLUDES=-I./include
 SRC=src/glad.c
 OBJ=bin/glad.o
+
+LIBS= -L/opt/homebrew/opt/glfw/lib \
+	  -lglfw
+
+INCLUDES=-I./include \
+		-I/opt/homebrew/opt/glfw/include \
+		-I/opt/homebrew/include \
+		-I./include \
+		-I/usr/local/include
+	
 endif
 
 SRC += src/ShaderProgram.cpp \
