@@ -36,7 +36,7 @@ clean:
 
 endif
 
-WARNINGS=-w
+WARNINGS=-Wall
 
 FLAGS=-std=c++17
 
