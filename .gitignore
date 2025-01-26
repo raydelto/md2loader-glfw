@@ -3,3 +3,4 @@ bin
 .vs
 .vscode
 .DS_Store
+**.o
