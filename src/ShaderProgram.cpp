@@ -92,7 +92,7 @@ string ShaderProgram::fileToString(const string& filename)
 
 		file.close();
 	}
-	catch (std::exception ex)
+	catch (std::exception& ex)
 	{
 		std::cerr << "Error reading shader filename!" << std::endl;
 	}
