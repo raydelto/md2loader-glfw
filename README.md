@@ -2,7 +2,7 @@
 
 This is a simple OpenGL Quake2 (MD2) models loader written in C++ with the GLFW utility library.
 
-This codebase currently supports Windows, macOS and Linux builds.
+This codebase currently supports Windows (Visual Studio & MinGW), macOS and Linux builds.
 
 If you have any questions don't hesitate to contact the author of this source code:
 
