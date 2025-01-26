@@ -15,7 +15,13 @@ INCLUDES=-I./include \
 		-I/opt/homebrew/include \
 		-I./include \
 		-I/usr/local/include
-	
+
+else
+# Windows (MinGW64)
+LIBS = -lglew32 -lglfw3 -lopengl32 -lgdi32 \
+	   -LC:\msys64\mingw64\lib
+INCLUDES=-IC:\msys64\mingw64\include -I./include
+
 endif
 
 SRC += src/ShaderProgram.cpp \
@@ -30,12 +36,10 @@ OBJ += bin/ShaderProgram.o \
 	   bin/OpenGLInit.o \
 	   bin/main.o
 
-WARNINGS=-Wall
+WARNINGS=-w
 
-FLAGS=-std=c++14
+FLAGS=-std=c++17
 
 all:
-	g++ -c -g $(SRC) $(INCLUDES) $(WARNINGS) $(FLAGS)
-	ls bin>/dev/null||mkdir bin
-	mv *.o ./bin
-	g++ -g $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o bin/main $(WARNINGS) $(FLAGS)
+	g++ -c $(SRC) $(INCLUDES) $(WARNINGS) $(FLAGS)
+	g++ $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o bin/main $(WARNINGS) $(FLAGS)
