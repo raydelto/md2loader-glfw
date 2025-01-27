@@ -48,7 +48,7 @@ void Md2::Draw(int frame, float angle, float interpolation, glm::mat4 &view, glm
 
 		auto count = m_frameIndices[frame].second - m_frameIndices[frame].first + 1;
 		m_shaderProgram->setUniform("interpolation", interpolation);
-		glDrawArrays(GL_TRIANGLES, 0,count);
+		glDrawArrays(GL_TRIANGLES, 0, count); // Ensure correct count of vertices
 		glBindVertexArray(0);
 }
 
@@ -121,7 +121,7 @@ void Md2::InitBuffer()
 
 		auto count = m_frameIndices[frameIndex].second - m_frameIndices[frameIndex].first + 1;		
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);		// "bind" or set as the current buffer we are working with
-		glBufferData(GL_ARRAY_BUFFER,  count * sizeof(float) * 8, &md2Vertices[m_frameIndices[frameIndex].first * 8 ], GL_STATIC_DRAW);	// copy the data from CPU to GPU
+		glBufferData(GL_ARRAY_BUFFER,  count * sizeof(float) * 8 * 3, &md2Vertices[m_frameIndices[frameIndex].first * 8 ], GL_STATIC_DRAW); // Ensure correct buffer size
 
 		glBindVertexArray(vao);					// Make it the current one
 		// Current Frame Position attribute

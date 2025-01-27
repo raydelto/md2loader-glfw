@@ -3,7 +3,6 @@ UNAME_S := $(shell uname -s)
 OBJ =  bin/ShaderProgram.o \
 	   bin/Texture2D.o \
 	   bin/Md2.o \
-	   bin/OpenGLInit.o \
 	   bin/main.o
 
 all: bin/main
@@ -30,6 +29,9 @@ LIBS = -lglew32 -lglfw3 -lopengl32 -lgdi32 \
 	   -LC:\msys64\mingw64\lib
 INCLUDES=-IC:\msys64\mingw64\include -I./include
 
+SDL_LIBS = -lSDL3 -LC:\raydelto\sdl3\lib
+SDL_INCLUDES = -IC:\raydelto\sdl3\include
+
 clean: 
 	del bin\*.o
 	del bin\main.exe
@@ -41,10 +43,13 @@ WARNINGS=-Wall
 FLAGS=-std=c++17
 
 bin/%.o: src/%.cpp | bin
-	g++ -c $< -o $@ $(INCLUDES) $(WARNINGS) $(FLAGS)
+	g++ -c $< -o $@ $(INCLUDES) $(WARNINGS) $(FLAGS) $(SDL_INCLUDES)
 
 bin/main: $(OBJ)
-	g++ $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o $@ $(WARNINGS) $(FLAGS)
+	g++ $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o $@ $(WARNINGS) $(FLAGS) $(SDL_LIBS) $(SDL_INCLUDES)
 
 bin:
 	mkdir bin
+
+SDL3Test: src/SDL3Test.cpp
+	g++ src/SDL3Test.cpp -o bin/SDL3Test $(INCLUDES) $(WARNINGS) $(FLAGS) $(LIBS) $(SDL_LIBS) $(SDL_INCLUDES)

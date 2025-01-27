@@ -1,5 +1,5 @@
-#include <SDL3/SDL.h>
 #include <GL/glew.h>
+#include <SDL3/SDL.h>
 #include <iostream>
 
 // Vertex Shader source code
@@ -19,6 +19,9 @@ void main() {
     fragColor = vec4(1.0, 0.5, 0.2, 1.0);
 }
 )";
+
+int gWindowWidth = 800;
+int gWindowHeight = 600;
 
 void CheckShaderCompilation(GLuint shader)
 {
@@ -55,12 +58,14 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    // Create SDL window
-    SDL_Window *window = SDL_CreateWindow(
-        "OpenGL Triangle - SDL3",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        800, 600,
-        SDL_WINDOW_OPENGL);
+    SDL_PropertiesID props = SDL_CreateProperties();
+    SDL_SetStringProperty(props, SDL_PROP_WINDOW_CREATE_TITLE_STRING, "Quake 2 MD2 Model Loader - SDL3");
+    SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_X_NUMBER, SDL_WINDOWPOS_CENTERED);
+    SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_Y_NUMBER, SDL_WINDOWPOS_CENTERED);
+    SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER, gWindowWidth);
+    SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER, gWindowHeight);
+    SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+    SDL_Window *window = SDL_CreateWindowWithProperties(props);
 
     if (!window)
     {
@@ -88,7 +93,7 @@ int main(int argc, char *argv[])
     if (glewInit() != GLEW_OK)
     {
         std::cerr << "Failed to initialize GLEW" << std::endl;
-        SDL_GL_DeleteContext(glContext);
+        SDL_GL_DestroyContext(glContext);
         SDL_DestroyWindow(window);
         SDL_Quit();
         return -1;
@@ -148,6 +153,16 @@ int main(int argc, char *argv[])
             {
                 running = false;
             }
+            else if (event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_ESCAPE)
+            {
+                running = false;
+            }
+            else if (event.type == SDL_EVENT_WINDOW_RESIZED)
+            {
+                gWindowWidth = event.window.data1;
+                gWindowHeight = event.window.data2;
+                glViewport(0, 0, gWindowWidth, gWindowHeight);
+            }
         }
 
         // Clear the screen
@@ -168,7 +183,7 @@ int main(int argc, char *argv[])
     glDeleteBuffers(1, &VBO);
     glDeleteProgram(shaderProgram);
 
-    SDL_GL_DeleteContext(glContext);
+    SDL_GL_DestroyContext(glContext);
     SDL_DestroyWindow(window);
     SDL_Quit();
 
