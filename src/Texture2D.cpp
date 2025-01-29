@@ -1,8 +1,7 @@
 #include "Texture2D.h"
 #include <iostream>
 #include <cassert>
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image/stb_image.h"
+#include "TgaLoader.h"
 
 //-----------------------------------------------------------------------------
 // Constructor
@@ -27,10 +26,12 @@ Texture2D::~Texture2D()
 //-----------------------------------------------------------------------------
 bool Texture2D::loadTexture(const string& fileName, bool generateMipMaps)
 {
-	int width, height, components;
+	unsigned short width;
+	unsigned short height;
 
-	// Use stbi image library to load our image
-	unsigned char* imageData = stbi_load(fileName.c_str(), &width, &height, &components, STBI_rgb_alpha);
+	unsigned char* imageData;
+	LoadTga(fileName.c_str(), imageData, width, height);
+	//= stbi_load(fileName.c_str(), &width, &height, &components, STBI_rgb_alpha);
 
 	if (imageData == NULL)
 	{
@@ -54,12 +55,12 @@ bool Texture2D::loadTexture(const string& fileName, bool generateMipMaps)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
 
 	if (generateMipMaps)
 		glGenerateMipmap(GL_TEXTURE_2D);
 
-	stbi_image_free(imageData);
+	free(imageData);
 	glBindTexture(GL_TEXTURE_2D, 0); // unbind texture when done so we don't accidentally mess up our mTexture
 
 	return true;
