@@ -44,9 +44,8 @@ void Md2::Draw(int frame, float angle, float interpolation, glm::mat4 &view, glm
 		m_shaderProgram->setUniform("modelView",  view * model);
 
 		glBindVertexArray(m_vaoIndices[frame]);
-		//  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		auto count = m_frameIndices[frame].second - m_frameIndices[frame].first + 1;
+		GLsizei count = m_frameIndices[frame].second - m_frameIndices[frame].first + 1;
 		m_shaderProgram->setUniform("interpolation", interpolation);
 		glDrawArrays(GL_TRIANGLES, 0, count); // Ensure correct count of vertices
 		glBindVertexArray(0);
@@ -160,7 +159,7 @@ void Md2::LoadModel(char *md2FileName)
 	md2model::vector *pntlst;
 	mesh *triIndex, *bufIndexPtr;
 
-#ifdef WIN32
+#ifdef _MSC_VER
 	fopen_s(&fp, md2FileName, "rb");
 #else
 	fp = fopen(md2FileName, "rb");

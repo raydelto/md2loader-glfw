@@ -21,13 +21,13 @@
     <ClCompile Include="src\Md2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OpenGLInit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ShaderProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Texture2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TgaLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,13 +35,13 @@
     <ClInclude Include="src\Md2.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\OpenGLInit.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ShaderProgram.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Texture2D.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TgaLoader.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

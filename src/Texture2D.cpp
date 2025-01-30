@@ -24,14 +24,13 @@ Texture2D::~Texture2D()
 // http://nothings.org/stb_image.h
 // Creates mip maps if generateMipMaps is true.
 //-----------------------------------------------------------------------------
-bool Texture2D::loadTexture(const string& fileName, bool generateMipMaps)
+bool Texture2D::loadTexture(const string &fileName, bool generateMipMaps)
 {
 	unsigned short width;
 	unsigned short height;
 
-	unsigned char* imageData;
+	unsigned char *imageData;
 	LoadTga(fileName.c_str(), imageData, width, height);
-	//= stbi_load(fileName.c_str(), &width, &height, &components, STBI_rgb_alpha);
 
 	if (imageData == NULL)
 	{
@@ -39,17 +38,10 @@ bool Texture2D::loadTexture(const string& fileName, bool generateMipMaps)
 		return false;
 	}
 
-
 	glGenTextures(1, &mTexture);
 	glBindTexture(GL_TEXTURE_2D, mTexture); // all upcoming GL_TEXTURE_2D operations will affect our texture object (mTexture)
 
 	// Set the texture wrapping/filtering options (on the currently bound texture object)
-	// GL_CLAMP_TO_EDGE
-	// GL_REPEAT
-	// GL_MIRRORED_REPEAT
-	// GL_CLAMP_TO_BORDER
-	// GL_LINEAR
-	// GL_NEAREST
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -58,7 +50,9 @@ bool Texture2D::loadTexture(const string& fileName, bool generateMipMaps)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
 
 	if (generateMipMaps)
+	{
 		glGenerateMipmap(GL_TEXTURE_2D);
+	}
 
 	free(imageData);
 	glBindTexture(GL_TEXTURE_2D, 0); // unbind texture when done so we don't accidentally mess up our mTexture

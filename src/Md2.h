@@ -6,8 +6,6 @@
 #else
 #include "GL/glew.h"
 #endif
-#include "GLFW/glfw3.h"
-
 
 #include <cstdio>
 #include <cstdlib>

@@ -9,29 +9,26 @@ OBJ =  bin/TgaLoader.o \
 all: bin/main
 
 ifeq ($(UNAME_S),Linux)
-	LIBS = -lGL -lGLEW -lglfw -ldl
+	LIBS = -lGL -lGLEW -ldl -lSDL3
 	INCLUDES=-I ./include
 endif
 ifeq ($(UNAME_S),Darwin)
 OBJ += bin/glad.o
 
-LIBS= -L/opt/homebrew/opt/glfw/lib \
-	  -lglfw
+LIBS= -L/opt/homebrew/opt/SDL3/lib \
+	  -lSDL3
 
 INCLUDES=-I./include \
-		-I/opt/homebrew/opt/glfw/include \
+		-I/opt/homebrew/opt/SDL3/include \
 		-I/opt/homebrew/include \
 		-I./include \
 		-I/usr/local/include
 
 else
 # Windows (MinGW64)
-LIBS = -lglew32 -lglfw3 -lopengl32 -lgdi32 \
-	   -LC:\msys64\mingw64\lib
-INCLUDES=-IC:\msys64\mingw64\include -I./include
-
-SDL_LIBS = -lSDL3 -LC:\raydelto\sdl3\lib
-SDL_INCLUDES = -IC:\raydelto\sdl3\include
+LIBS = -lglew32 -lopengl32 -lgdi32 -lSDL3\
+	   -LC:\msys64\mingw64\lib -LC:\sdl3\lib
+INCLUDES=-IC:\msys64\mingw64\include -IC:\sdl3\include -I./include 
 
 clean: 
 	del bin\*.o
@@ -47,10 +44,7 @@ bin/%.o: src/%.cpp | bin
 	g++ -c $< -o $@ $(INCLUDES) $(WARNINGS) $(FLAGS) $(SDL_INCLUDES)
 
 bin/main: $(OBJ)
-	g++ $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o $@ $(WARNINGS) $(FLAGS) $(SDL_LIBS) $(SDL_INCLUDES)
+	g++ $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o $@ $(WARNINGS) $(FLAGS)
 
 bin:
 	mkdir bin
-
-SDL3Test: src/SDL3Test.cpp
-	g++ src/SDL3Test.cpp -o bin/SDL3Test $(INCLUDES) $(WARNINGS) $(FLAGS) $(LIBS) $(SDL_LIBS) $(SDL_INCLUDES)

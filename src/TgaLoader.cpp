@@ -31,7 +31,13 @@ bool BGRtoBGRA(unsigned char *&data, const unsigned int dataLength)
 
 bool LoadTga(const char *filename, unsigned char *&data, unsigned short &width, unsigned short &height)
 {
+
+#ifdef _MSC_VER
+    FILE *file = nullptr;
+    fopen_s(&file, filename, "rb");
+#else
     FILE *file = fopen(filename, "rb");
+#endif
 
     if (!file)
     {

@@ -22,7 +22,7 @@ namespace
 	int gWindowHeight = 600;
 	bool gPause = false;
 	bool gWireframe = false;
-	constexpr char* APP_TITLE = "Quake 2 MD2 Model Loader - SDL3";
+	constexpr const char* APP_TITLE = "Quake 2 MD2 Model Loader - SDL3";
 }
 
 bool Init()
