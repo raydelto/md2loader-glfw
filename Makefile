@@ -9,10 +9,14 @@ OBJ =  bin/ShaderProgram.o \
 all: bin/main
 
 ifeq ($(UNAME_S),Linux)
-	LIBS = -lGL -lGLEW -lglfw -ldl
-	INCLUDES=-I ./include
-endif
-ifeq ($(UNAME_S),Darwin)
+LIBS = -lGL -lGLEW -lglfw -ldl
+INCLUDES=-I./include
+
+clean:
+	rm bin/*.o
+	rm bin/main
+
+else ifeq ($(UNAME_S),Darwin)
 OBJ += bin/glad.o
 
 LIBS= -L/opt/homebrew/opt/glfw/lib \
