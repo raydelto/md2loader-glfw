@@ -114,7 +114,7 @@ class Md2
     std::unique_ptr<modData> m_model;
     std::unique_ptr<Texture2D> m_texture;
     std::vector<GLuint> m_vaoIndices;
-	std::vector<GLuint> m_vboIndices;
+    std::vector<GLuint> m_vboIndices;
     std::unique_ptr<ShaderProgram> m_shaderProgram;
     std::map<int, std::pair<int,int>> m_frameIndices;
     bool m_pause;
