@@ -93,7 +93,7 @@ bool OpenGLInit::initOpenGL()
 
 	// Define the viewport dimensions
 	glViewport(0, 0, gWindowWidth, gWindowHeight);
-	glEnable(GL_DEPTH_TEST);
+//	glEnable(GL_DEPTH_TEST);
 
 	return true;
 }

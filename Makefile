@@ -5,13 +5,19 @@ ifeq ($(UNAME_S),Linux)
 endif
 ifeq ($(UNAME_S),Darwin)
 FRAMEWORKS=-framework OpenGL -framework Cocoa -framework IOKit
-
-LIBS= -L/opt/glfw/lib-arm64 \
-	  -L/System/Library/Frameworks \
-	  -lglfw3
-INCLUDES=-I./include -I./TPL/imgui -I./TPL/imgui/backends
 SRC=src/glad.c
 OBJ=bin/glad.o
+
+LIBS= -L/opt/homebrew/opt/glfw/lib \
+	  -lglfw
+
+INCLUDES=-I./include \
+		-I/opt/homebrew/opt/glfw/include \
+		-I/opt/homebrew/include \
+		-I./include \
+		-I/usr/local/include \
+		-I./TPL/imgui -I./TPL/imgui/backends
+	
 endif
 
 SRC += src/ShaderProgram.cpp \
@@ -48,17 +54,4 @@ all:
 	g++ -c -g $(SRC) $(INCLUDES) $(WARNINGS) $(FLAGS)
 	ls bin>/dev/null||mkdir bin
 	mv *.o ./bin
-	g++ -g $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o bin/maingpp $(WARNINGS) $(FLAGS)
-
-release:
-	g++ -c $(SRC) $(INCLUDES) $(WARNINGS) $(FLAGS)
-	ls bin>/dev/null||mkdir bin
-	mv *.o ./bin
-	g++ $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o bin/main $(WARNINGS) $(FLAGS)
-
-clang:
-	clang++ -c $(SRC) $(INCLUDES) $(WARNINGS) $(FLAGS) -Ofast
-	ls bin>/dev/null||mkdir bin
-	mv *.o ./bin
-	clang++ $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o bin/main $(WARNINGS) $(FLAGS) -Ofast
-
+	g++ -g $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o bin/main $(WARNINGS) $(FLAGS)

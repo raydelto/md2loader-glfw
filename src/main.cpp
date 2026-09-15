@@ -7,10 +7,12 @@
 #include <iostream>
 #include "Md2.h"
 
+
+
 namespace
 {
-	const int startFrame = 0;
-	const int endFrame = 197;
+	const int startFrame = 39;
+	const int endFrame = 43;
 }
 
 int main()
